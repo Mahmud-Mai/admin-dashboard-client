@@ -2,8 +2,9 @@ import { Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListI
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import FlexBetween from './FlexBetween'
-import { ChevronLeft, ChevronRightOutlined } from '@mui/icons-material'
+import { ChevronLeft, ChevronRightOutlined, SettingsOutlined } from '@mui/icons-material'
 import { navItems } from 'common/Constants'
+import profileImage from '../assets/profile.jpeg'
 
 
 const Sidebar = ({
