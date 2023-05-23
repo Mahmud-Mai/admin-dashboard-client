@@ -1,21 +1,80 @@
-import { Box, useTheme } from '@mui/material'
-import Header from 'components/Header'
-import React from 'react'
-import { useGetCustomersQuery } from 'state/api'
+import { Box, useTheme } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import Header from "components/Header";
+import React from "react";
+import { useGetCustomersQuery } from "state/api";
 
 const Customers = () => {
-    const theme = useTheme
-    const { data, isLoading } = useGetCustomersQuery
-    console.log("🚀 ~ file: index.jsx:9 ~ Customers ~ isLoading state:", isLoading)
-    console.log("🚀 ~ file: index.jsx:9 ~ Fetch Customers data:", data)
+  const theme = useTheme;
+  const { data, isLoading } = useGetCustomersQuery;
+  console.log(
+    "🚀 ~ file: index.jsx:9 ~ Customers ~ isLoading state:",
+    isLoading
+  );
+  console.log("🚀 ~ file: index.jsx:9 ~ Fetch Customers data:", data);
+
+  const columns = [
+    {
+      field: "_id",
+      headerName: "ID",
+      flex: 1,
+    },
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 0.5,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+    },
+    {
+      field: "phoneNumber",
+      headerName: "Phone Number",
+      flex: 0.5,
+      renderCell: (params) => {
+        return params.value.replace(/^(\d{3})(\d{3})(\d{34})/, "($1)$2-$3");
+      },
+    },
+    {
+      field: "city",
+      headerName: "City",
+      flex: 0.4,
+    },
+    {
+      field: "ocuupation",
+      headerName: "Ocuupation",
+      flex: 1,
+    },
+    {
+      field: "role",
+      headerName: "Role",
+      flex: 0.5,
+    },
+  ];
 
   return (
-    <Box>
-        <Header title='Customers' subtitle='This is a list of all customers' />
-        {/* Grid for Customers data  */}
-        {/* data.map */}
+    <Box mx="1.5rem 2.5rem">
+      <Header
+        title="CUSTOMERS"
+        subtitle="This is a list of all customers"
+      />
+      {/* Grid for Customers data  */}
+      <Box
+        mt="40px"
+        height="75vh"
+      >
+        <DataGrid
+          loading={isLoading || !data}
+          getRowId={(row) => row._id}
+          rows={data || []}
+          columns={columns}
+        />
+      </Box>
+      {/* data.map */}
     </Box>
-  )
-}
+  );
+};
 
-export default Customers
+export default Customers;
