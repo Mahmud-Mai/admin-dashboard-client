@@ -1,17 +1,13 @@
-import { Box, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import Header from "components/Header";
 import React from "react";
+import { Box, useTheme } from "@mui/material";
 import { useGetCustomersQuery } from "state/api";
+import Header from "components/Header";
+import { DataGrid } from "@mui/x-data-grid";
 
 const Customers = () => {
-  const theme = useTheme;
-  const { data, isLoading } = useGetCustomersQuery;
-  console.log(
-    "🚀 ~ file: index.jsx:9 ~ Customers ~ isLoading state:",
-    isLoading
-  );
-  console.log("🚀 ~ file: index.jsx:9 ~ Fetch Customers data:", data);
+  const theme = useTheme();
+  const { data, isLoading } = useGetCustomersQuery();
+  console.log("data", data);
 
   const columns = [
     {
@@ -34,17 +30,19 @@ const Customers = () => {
       headerName: "Phone Number",
       flex: 0.5,
       renderCell: (params) => {
-        return params.value.replace(/^(\d{3})(\d{3})(\d{34})/, "($1)$2-$3");
+        return params.value
+          ? params.value.replace(/^(\d{3})(\d{3})(\d{4})/, "($1)$2-$3")
+          : "";
       },
     },
     {
-      field: "city",
-      headerName: "City",
+      field: "country",
+      headerName: "Country",
       flex: 0.4,
     },
     {
-      field: "ocuupation",
-      headerName: "Ocuupation",
+      field: "occupation",
+      headerName: "Occupation",
       flex: 1,
     },
     {
@@ -55,15 +53,38 @@ const Customers = () => {
   ];
 
   return (
-    <Box mx="1.5rem 2.5rem">
+    <Box m="1.5rem 2.5rem">
       <Header
         title="CUSTOMERS"
-        subtitle="This is a list of all customers"
+        subtitle="List of Customers"
       />
-      {/* Grid for Customers data  */}
       <Box
         mt="40px"
         height="75vh"
+        sx={{
+          "& .MuiDataGrid-root": {
+            border: "none",
+          },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none",
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            backgroundColor: theme.palette.background.alt,
+            color: theme.palette.secondary[100],
+            borderBottom: "none",
+          },
+          "& .MuiDataGrid-virtualScroller": {
+            backgroundColor: theme.palette.primary.light,
+          },
+          "& .MuiDataGrid-footerContainer": {
+            backgroundColor: theme.palette.background.alt,
+            color: theme.palette.secondary[100],
+            borderTop: "none",
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${theme.palette.secondary[200]} !important`,
+          },
+        }}
       >
         <DataGrid
           loading={isLoading || !data}
@@ -72,7 +93,6 @@ const Customers = () => {
           columns={columns}
         />
       </Box>
-      {/* data.map */}
     </Box>
   );
 };
