@@ -1,7 +1,7 @@
 import React from "react";
 
-const Sales = () => {
+const Overview = () => {
   return <div></div>;
 };
 
-export default Sales;
+export default Overview;
