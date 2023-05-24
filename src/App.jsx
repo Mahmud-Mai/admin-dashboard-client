@@ -47,7 +47,7 @@ const App = () => {
                 element={<Transactions />}
               />
               <Route
-                path="/sales"
+                path="/overview"
                 element={<Overview />}
               />
             </Route>
